@@ -6,6 +6,7 @@
 
 ### Cans
  - Run lmc Mnemonic code
+ - Have commented lines, just no comments after code. I can't be bothered to implement that right now might add it in future but who is really commenting LMC code. This is made for students to learn CPUs.
  - Uses stored variables as instructions if you forget to HLT, as every command is translated as you'd expect from an LMC implementation
  - Idk why I have a cans list you'd hope it just works like it's supposed to actually.
 

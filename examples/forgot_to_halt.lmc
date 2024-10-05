@@ -1,2 +1,3 @@
 INP
+# 902 is the output command - note how its being stored as a variable
 OUTPUT_COMMAND DAT 902

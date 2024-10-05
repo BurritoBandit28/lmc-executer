@@ -78,7 +78,7 @@ impl LittleMan {
             let mut is_dat_line = false;
             let mut ret_string = line_as_vec.join("");
 
-            if line.is_empty() {
+            if line.is_empty() || line.starts_with('#') {
                 continue;
             }
             if line.contains("DAT") {
@@ -95,7 +95,6 @@ impl LittleMan {
             }
             line_count += 1;
         }
-
 
         file = buffer_idfk.join("\n");
 
