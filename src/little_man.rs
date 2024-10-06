@@ -88,7 +88,7 @@ impl LittleMan {
                 dat_key.insert(line_as_vec[0].to_string(), (line_count.to_string(), line_as_vec[2].to_string()));
                 is_dat_line = true;
             }
-            else if line_as_vec.join("").chars().nth(0).unwrap().is_alphabetic() {
+            else if ret_string.chars().nth(0).unwrap().is_alphabetic() {
                 branch_key.insert(line_as_vec[0].to_string(), line_count.to_string());
                 line_as_vec.remove(0);
                 ret_string = line_as_vec.join("");
@@ -100,13 +100,41 @@ impl LittleMan {
         }
 
         file = buffer_idfk.join("\n");
+        buffer_idfk = vec![];
 
-        for (key, (val, _unused)) in dat_key.iter() {
-            file = file.replace(key, val);
+        for line in file.lines() {
+            let mut before = String::new();
+            let mut after = String::new();
+            let mut indx = 0;
+            'char_loop : for c in line.chars() {
+                if c.is_alphabetic() {
+                    break 'char_loop;
+                }
+                before.push(c);
+                indx += 1;
+            }
+            for x in indx..line.len() {
+                after.push(line.chars().nth(x).unwrap());
+            }
+
+            'checks : {
+                for (key, (val, _unused)) in dat_key.iter() {
+                    if key.eq(&after) {
+                        after = val.to_string();
+                        break 'checks;
+                    }
+                }
+                for (key, val) in branch_key.iter() {
+                    if key.eq(&after) {
+                        after = val.to_string();
+                        break 'checks;
+                    }
+                }
+            }
+            buffer_idfk.push(format!("{}{}",before,after));
         }
-        for (key, val) in branch_key.iter() {
-            file = file.replace(key, val);
-        }
+
+        file = buffer_idfk.join("\n");
 
         let mut memory : Vec<String> = vec![];
         for lines in file.lines() {
