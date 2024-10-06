@@ -78,10 +78,13 @@ impl LittleMan {
             let mut is_dat_line = false;
             let mut ret_string = line_as_vec.join("");
 
-            if line.is_empty() || line.starts_with('#') {
+            if line.is_empty() || line.starts_with('#') || line_as_vec.is_empty() {
                 continue;
             }
             if line.contains("DAT") {
+                if line_as_vec.get(2).is_none() {
+                    line_as_vec.push("0");
+                }
                 dat_key.insert(line_as_vec[0].to_string(), (line_count.to_string(), line_as_vec[2].to_string()));
                 is_dat_line = true;
             }
