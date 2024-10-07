@@ -57,6 +57,7 @@ impl LittleMan {
     pub fn translate(path : &str) -> Vec<String> {
         let mut file = fs::read_to_string(path).expect("File not found");
 
+        // TODO: These replace any instance of, so START would become 3RT, which is bad. - fix
         file = file.replace("LDA", "5");
         file = file.replace("STA", "3");
         file = file.replace("ADD", "1");
@@ -81,7 +82,7 @@ impl LittleMan {
             if line.is_empty() || line.starts_with('#') || line_as_vec.is_empty() {
                 continue;
             }
-            if line.contains("DAT") {
+            if line.contains("DAT") { //TODO: This would be true for a variable or branch labled "DATE" for example - fix
                 if line_as_vec.get(2).is_none() {
                     line_as_vec.push("0");
                 }
