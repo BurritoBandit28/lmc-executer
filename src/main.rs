@@ -1,13 +1,18 @@
+use std::env;
 use crate::little_man::LittleMan;
 
 mod little_man;
 
 fn main() {
     let mut lmc = LittleMan::new();
-    println!("Please enter a Little Man computer program path");
-    let mut value = String::new();
-    std::io::stdin().read_line(&mut value).expect("Failed to read line");
-    lmc.set_memory(LittleMan::translate(value.trim()));
+
+    let args: Vec<String> = env::args().collect();
+    if args.len() < 2 {
+        println!("No input file specified!");
+        return;
+    }
+
+    lmc.set_memory(LittleMan::translate(&args[1]));
     lmc.run();
     println!("Program completed!");
     std::thread::sleep(std::time::Duration::from_secs(3));
